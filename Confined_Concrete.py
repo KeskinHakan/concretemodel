@@ -4,15 +4,10 @@ Created on Sun Feb  6 19:56:55 2022
 
 @author: hakan
 """
-import numpy as np
+
 import streamlit as st
-from bokeh.plotting import figure
-from pandas import read_excel
-from numpy import arange
 import pandas as pd
-import pydeck as pdk
-from geopy.geocoders import Nominatim
-from math import asin, sqrt
+from math import sqrt
 from PIL import Image
 
 
