@@ -49,7 +49,7 @@ col2.image(img_1, width = 500, caption = "Typical Column Section")
 
 
 
-fc = st.sidebar.number_input("Concrete Compressive Strength for Confined Concrete - fc: ",value=16.92, step=1.0)
+fc = st.sidebar.number_input("Concrete Compressive Strength for Confined Concrete - fc: ",value=20.00, step=1.0)
 fy = st.sidebar.number_input("Yield Strength of Longitudinal Rebar - fy: ",value=420.0, step=10.0)
 b = st.sidebar.number_input("Width of the concrete section - b: ",value=600.0, step=50.0)
 h = st.sidebar.number_input("Height of the concrete section - h: ",value=600.0, step=50.0)
