@@ -14,11 +14,12 @@ from PIL import Image
 st.title("Confined & Unconfined Concrete Model")
 
 """
-Confined and Unconfined concrete calculator with Mander Concrete Model
+Confined and Unconfined concrete calculator according to Mander Concrete Model
 
 To use the app you should choose at the following items below:
     
 """
+
 
 # Unconfined and Confined Concrete Model (Mander Model)
 
@@ -39,18 +40,21 @@ def soilType_func(fc,fy, b, h, cover, dia_long, number_long, dia_trans, n_leg_x,
     
     return d, b_clear, A_long, A_tra, As, bo, ho, A, A_tra_x, A_tra_y, ratio_x, ratio_y, total_ratio
 
-st.sidebar.header("Section Properties and Material Properties")
-
 
 
 img_1 = Image.open("ColumnSection.png")
 col1, col2, col3,col4,col5 = st.columns([1,1,1,1,1])
 col2.image(img_1, width = 500, caption = "Typical Column Section")
 
+st.sidebar.header("Material Properties")
 
+coefficient = st.sidebar.selectbox("Material Coefficient: ", {"Nominal", "Expected"})
 
 fc = st.sidebar.number_input("Concrete Compressive Strength for Confined Concrete - fc: ",value=20.00, step=1.0)
 fy = st.sidebar.number_input("Yield Strength of Longitudinal Rebar - fy: ",value=420.0, step=10.0)
+
+st.sidebar.header("Section Properties")
+
 b = st.sidebar.number_input("Width of the concrete section - b: ",value=600.0, step=50.0)
 h = st.sidebar.number_input("Height of the concrete section - h: ",value=600.0, step=50.0)
 cover = st.sidebar.number_input("Concrete cover - d': ",value=40.0, step=5.0)
@@ -173,12 +177,17 @@ elif n_of_long_y == 7:
 d, b_clear, A_long, A_tra, As, bo, ho, A, A_tra_x, A_tra_y, ratio_x, ratio_y, total_ratio = soilType_func(fc,fy, b, h, cover, dia_long, number_long, dia_trans, n_leg_x, n_leg_y, s)
 ke = (1-180267/(6*bo*ho))*(1-s/(2*bo))*(1-s/(2*ho))*(1-As/(bo*ho))**-1
 
-
-fyh = fy*1.2
+if coefficient == "Nominal":
+    fyh = fy
+elif coefficient == "Expected":
+    fyh = fy*1.2
 fex = ke*ratio_x*fyh
 fey = ke*ratio_y*fyh
 f1 = (fex+fey)/2
-fco = fc*1.3
+if coefficient == "Nominal":
+    fco = fc
+elif coefficient == "Expected":
+    fco = fc*1.3
 lambda_c = 2.254*sqrt(1+7.94*f1/fco)-2*(f1/fco)-1.254
 fcc = fco*lambda_c
 fsp = 0
@@ -242,8 +251,6 @@ df_unconf.index = as_list
 
 df_fc = df_unconf['Stress']
 st.line_chart(df_fc)
-
-
 
 def convert_confined_df(df_conf):
    return df_conf.to_csv().encode('utf-8')
