@@ -262,7 +262,7 @@ csv_conf = convert_confined_df(df_conf)
 csv_unconf = convert_unconfined_df(df_unconf)
 
 st.download_button(
-   "Confined Concrete - Press to Download",
+   "Confined Concrete - Download",
    csv_conf,
    "confined.csv",
    "text/csv",
@@ -270,7 +270,7 @@ st.download_button(
 )
 
 st.download_button(
-   "Unconfined Concrete - Press to Download",
+   "Unconfined Concrete - Download",
    csv_unconf,
    "unconfined.csv",
    "text/csv",
